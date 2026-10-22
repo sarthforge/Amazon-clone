@@ -1,11 +1,19 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, X, Package, PackageCheck, Truck } from 'lucide-react';
+import { Search, X, Package, PackageCheck, Truck, XCircle, Ban } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 
 // Calculates a simulated order status based on how many days have passed
 // since the order timestamp embedded in the Order ID (ORD-<timestamp>)
-function getOrderStatus(orderId) {
+// unless the order has been manually cancelled, which always takes priority.
+function getOrderStatus(order) {
+  if (order.status === 'Cancelled') {
+    return { label: 'Cancelled', className: 'status-cancelled', Icon: Ban };
+  }
+
+  const orderId = order.orderId;
+
   if (!orderId || typeof orderId !== 'string') {
     return { label: 'Placed', className: 'status-placed', Icon: Package };
   }
@@ -31,8 +39,10 @@ function getOrderStatus(orderId) {
 
 export default function Orders() {
   const { user } = useAuth();
+  const { showToast } = useToast();
   const [allOrders, setAllOrders] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [cancelConfirmId, setCancelConfirmId] = useState(null);
 
   // Load orders from localStorage on mount
   useEffect(() => {
@@ -55,16 +65,35 @@ export default function Orders() {
     const trimmed = searchTerm.trim().toLowerCase();
     if (!trimmed) return userOrders;
 
-   return userOrders.filter((order) => {
-  const matchesOrderId = order.orderId?.toLowerCase().includes(trimmed) || false;
-  const matchesProduct = order.items?.some((item) =>
-    item.title?.toLowerCase().includes(trimmed)
-  );
-  return matchesOrderId || matchesProduct;
-});
+    return userOrders.filter((order) => {
+      const matchesOrderId = order.orderId?.toLowerCase().includes(trimmed) || false;
+      const matchesProduct = order.items?.some((item) =>
+        item.title?.toLowerCase().includes(trimmed)
+      );
+      return matchesOrderId || matchesProduct;
+    });
   }, [userOrders, searchTerm]);
 
   const handleClearSearch = () => setSearchTerm('');
+
+  // Step 1: User clicks "Cancel Order" -> show inline confirmation
+  const handleCancelClick = (orderId) => {
+    setCancelConfirmId(orderId);
+  };
+
+  // Step 2: User clicks "Yes, Cancel" -> actually update status
+  const handleConfirmCancel = (orderId) => {
+    const updatedOrders = allOrders.map((order) =>
+      order.orderId === orderId ? { ...order, status: 'Cancelled' } : order
+    );
+    setAllOrders(updatedOrders);
+    localStorage.setItem('amazon_react_orders', JSON.stringify(updatedOrders));
+    setCancelConfirmId(null);
+    showToast(`Order ${orderId} has been cancelled.`, 'info');
+  };
+
+  // User backs out of the confirmation
+  const handleDismissCancel = () => setCancelConfirmId(null);
 
   if (allOrders.length === 0) {
     return (
@@ -113,13 +142,15 @@ export default function Orders() {
         </div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
-         {filteredOrders.map((order, orderIndex) => {
-  const status = getOrderStatus(order.orderId);
-  const StatusIcon = status.Icon;
+          {filteredOrders.map((order, orderIndex) => {
+            const status = getOrderStatus(order);
+            const StatusIcon = status.Icon;
+            const canCancel = status.label === 'Placed';
+            const isConfirming = cancelConfirmId === order.orderId;
 
-  return (
-    <div
-      key={order.orderId || `order-${orderIndex}`}
+            return (
+              <div
+                key={order.orderId || `order-${orderIndex}`}
                 style={{
                   backgroundColor: '#fff',
                   border: '1px solid #ddd',
@@ -197,6 +228,42 @@ export default function Orders() {
                   <p style={{ fontSize: '12px', color: '#565959', marginTop: '8px' }}>
                     Payment Method: <strong>{order.paymentMethod}</strong>
                   </p>
+
+                  {/* ===== Order Cancellation UI ===== */}
+                  {canCancel && !isConfirming && (
+                    <button
+                      className="cancel-order-btn"
+                      onClick={() => handleCancelClick(order.orderId)}
+                    >
+                      <XCircle size={14} /> Cancel Order
+                    </button>
+                  )}
+
+                  {isConfirming && (
+                    <div className="cancel-confirm-box">
+                      <span>Are you sure you want to cancel this order?</span>
+                      <div style={{ display: 'flex', gap: '10px', marginTop: '8px' }}>
+                        <button
+                          className="confirm-cancel-yes"
+                          onClick={() => handleConfirmCancel(order.orderId)}
+                        >
+                          Yes, Cancel Order
+                        </button>
+                        <button
+                          className="confirm-cancel-no"
+                          onClick={handleDismissCancel}
+                        >
+                          No, Keep Order
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {status.label === 'Cancelled' && (
+                    <p className="cancelled-note">
+                      This order was cancelled and will not be processed further.
+                    </p>
+                  )}
                 </div>
               </div>
             );

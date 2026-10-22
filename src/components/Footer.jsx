@@ -66,8 +66,7 @@ function Footer() {
           <a href="#interest-ads">Your Ads Privacy Choices</a>
         </div>
         <div className="copyright">
-          © 1996-2025, Amazon.com, Inc. or its affiliates (React Refactor Clone)
-        </div>
+          © 1996-2025, Amazon.com, Inc. or its affiliates </div>
       </div>
     </footer>
   );

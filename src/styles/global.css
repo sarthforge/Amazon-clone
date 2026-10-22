@@ -2677,3 +2677,120 @@ select {
     grid-template-columns: repeat(1, 1fr) !important;
   }
 }
+/* ===== Save for Later ===== */
+.save-for-later-btn,
+.move-to-cart-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  color: #007185;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.save-for-later-btn:hover,
+.move-to-cart-btn:hover {
+  color: #c7511f;
+  text-decoration: underline;
+}
+
+.saved-for-later-section {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 2px solid #ddd;
+}
+
+.saved-for-later-heading {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: var(--text-primary);
+}
+
+.saved-item {
+  opacity: 0.9;
+}
+
+[data-theme="dark"] .saved-for-later-section {
+  border-top-color: var(--border-color);
+}
+/* ===== Order Cancellation ===== */
+.cancel-order-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  background: none;
+  border: 1px solid #d5d9d9;
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 13px;
+  color: #0f1111;
+  cursor: pointer;
+}
+
+.cancel-order-btn:hover {
+  background-color: #f7f8f8;
+  border-color: #999;
+}
+
+.cancel-confirm-box {
+  margin-top: 12px;
+  padding: 12px;
+  background-color: #fff3f3;
+  border: 1px solid #f5c6cb;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.confirm-cancel-yes {
+  background-color: #cc0c39;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 7px 14px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.confirm-cancel-yes:hover {
+  background-color: #a50a2f;
+}
+
+.confirm-cancel-no {
+  background: none;
+  border: 1px solid #d5d9d9;
+  border-radius: 6px;
+  padding: 7px 14px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.cancelled-note {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #cc0c39;
+  font-style: italic;
+}
+
+.status-cancelled {
+  background-color: #fdecea;
+  color: #cc0c39;
+}
+
+[data-theme="dark"] .cancel-order-btn {
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .cancel-confirm-box {
+  background-color: #2a1515;
+  border-color: #5c2b2b;
+}
+
+[data-theme="dark"] .confirm-cancel-no {
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}

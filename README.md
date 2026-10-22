@@ -6,16 +6,16 @@ A fully-featured, responsive e-commerce single-page application inspired by Amaz
 
 ---
 
-## 📸 Preview
+## Preview
 
 <img width="800" height="436" alt="AMAZON_CLONE" src="https://github.com/user-attachments/assets/fd854629-0951-4dad-9489-1deb3d07c311" />
 
 
 ---
 
-## ✨ Features
+## Features
 
-### 🛍️ Shopping Experience
+### Shopping Experience
 - Product listing with live data from [FakeStoreAPI](https://fakestoreapi.com/)
 - Category filtering, price range & customer rating filters
 - Product sorting (price, rating, featured)
@@ -24,7 +24,7 @@ A fully-featured, responsive e-commerce single-page application inspired by Amaz
 - Product details page with full description and customer reviews
 - Star-rating review system with dynamic average calculation
 
-### 🛒 Cart & Checkout
+### Cart & Checkout
 - Add to Cart / Remove / Update Quantity
 - **Save for Later** — move items between Cart and a saved list
 - Wishlist system with persistent storage
@@ -34,16 +34,16 @@ A fully-featured, responsive e-commerce single-page application inspired by Amaz
   - Promo code / discount system (`WELCOME10`, `SAVE50`, `FREESHIP`)
 - Protected checkout route (requires login)
 
-### 📦 Order Management
+### Order Management
 - Order history with search/filter by Order ID or product name
 - Simulated order status lifecycle: **Placed → Shipped → Delivered**
 - **Order Cancellation** with confirmation step (only for unshipped orders)
 
-### 🔐 Authentication
+### Authentication
 - Register / Login / Logout with localStorage-based session persistence
 - Protected routes with redirect-back-after-login flow
 
-### 🎨 UI/UX
+### UI/UX
 - **Dark Mode** toggle (persisted, CSS variable–based theming)
 - Fully **mobile responsive** (hamburger drawer navigation, adaptive grids)
 - Global toast notification system
@@ -51,7 +51,7 @@ A fully-featured, responsive e-commerce single-page application inspired by Amaz
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Category | Technology |
 |---|---|
@@ -67,7 +67,7 @@ A fully-featured, responsive e-commerce single-page application inspired by Amaz
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 src/
@@ -83,7 +83,7 @@ src/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 - Node.js (v16+)
@@ -113,7 +113,7 @@ npm run build
 
 ---
 
-## 🧭 Routes
+## Routes
 
 | Path | Page | Access |
 |---|---|---|
@@ -127,7 +127,7 @@ npm run build
 
 ---
 
-## 🗺️ Roadmap
+## Roadmap
 
 - [x] Core shopping experience (browse, filter, sort, search)
 - [x] Cart, Wishlist, and Checkout flow
@@ -145,12 +145,12 @@ npm run build
 
 ---
 
-## 👨‍💻 About This Project
+## About This Project
 
 This project was built as part of a learning journey toward becoming a **Java Full Stack Developer**. It began as a vanilla JavaScript clone and was fully refactored into a modern React SPA with reusable components, centralized state management, and client-side routing — architected to later integrate with a Spring Boot REST API backend.
 
 ---
 
-## 📄 License
+## License
 
 This project is for educational/portfolio purposes only and is not affiliated with Amazon.com, Inc.
